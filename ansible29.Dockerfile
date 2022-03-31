@@ -1,5 +1,8 @@
 FROM python:3.10.0-alpine as build
 
+LABEL maintainer="Fabiano Florentino"
+LABEL email="fabianoflorentino@outlook.com"
+
 COPY requirements_ansible2_9_21.txt .
 
 RUN apk add --no-cache make gcc g++ libffi-dev openssl openssl-dev sshpass openssh \
