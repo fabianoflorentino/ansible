@@ -2,6 +2,7 @@ FROM python:3.10.0-alpine as build
 
 LABEL maintainer="Fabiano Florentino"
 LABEL email="fabianoflorentino@outlook.com"
+LABEL ansible version="2.9.21"
 
 COPY requirements_ansible2_9_21.txt .
 

@@ -26,7 +26,7 @@ jobs:
       - name: Login
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Build the image
+      # Build the image (Ansible 5.5.0)
       - name: Build Image (Ansible 5.5.0)
         run: |
           docker build \
@@ -35,17 +35,6 @@ jobs:
           -t $GITHUB_REPOSITORY:5.5.0 \
           -f ./ansible55.Dockerfile .
       
-      - name: Build Image Latest
-        run: |
-          docker build \
-          --no-cache \
-          --rm \
-          -t $GITHUB_REPOSITORY:latest \
-          -f ./ansible55.Dockerfile .
-      
-      # Push the image to Docker Hub
+      # Push the image to Docker Hub (Ansible 5.5.0)
       - name: Push Version
         run: docker push $GITHUB_REPOSITORY:5.5.0
-      
-      - name: Push Latest
-        run: docker push $GITHUB_REPOSITORY:latest
