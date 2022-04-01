@@ -54,7 +54,7 @@ docker run -it --name ansible -v $PWD:/ansible -w /ansible --entrypoint "" fabia
 
 #### **Ansible 2.9.21**
 
-[./github/workflows/build-image-v2921.yml](./github/workflows/build-image-v2921.yml)
+[.github/workflows/build-image-v2921.yml](.github/workflows/build-image-v2921.yml)
 
 ```yaml
 ---
@@ -97,7 +97,7 @@ jobs:
 
 #### **Ansible 5.5.0**
 
-[./github/workflows/build-image-v550.yml](./github/workflows/build-image-v550.yml)
+[.github/workflows/build-image-v550.yml](.github/workflows/build-image-v550.yml)
 
 ```yaml
 ---
