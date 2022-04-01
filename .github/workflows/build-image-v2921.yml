@@ -33,6 +33,7 @@ jobs:
       
       - name: Scan for vulnerabilities
         run: |
+          apt-get update && apt-get install docker-scan-plugin
           docker scan $GITHUB_REPOSITORY:2.9.21
 
       # Push the image to Docker Hub (Ansible 2.9.21)
