@@ -5,6 +5,7 @@ LABEL email="fabianoflorentino@outlook.com"
 LABEL ansible version="2.9.21"
 LABEL image version="v0.1"
 
+
 COPY requirements_ansible2_9_21.txt .
 
 RUN apk add --no-cache make gcc g++ libffi-dev openssl openssl-dev sshpass openssh \
