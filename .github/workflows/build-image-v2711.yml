@@ -37,7 +37,7 @@ jobs:
         with:
           file: ansible27.Dockerfile
           context: .
-          tags: $GITHUB_REPOSITORY:2.7.11
+          tags: 2.7.11
           outputs: type=docker,dest=/tmp/$GITHUB_REPOSITORY_2.7.11.tar
       -
         name: Upload artifact
