@@ -61,7 +61,7 @@ jobs:
       -
         name: Load image
         run: |
-          ls -l /tmp
+          echo $GITHUB_REPOSITORY
           docker load --input /tmp/$GITHUB_REPOSITORY_2.7.11.tar
           docker image ls -a
       - 
