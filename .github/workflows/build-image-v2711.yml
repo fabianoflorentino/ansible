@@ -36,13 +36,13 @@ jobs:
         with:
           file: ansible27.Dockerfile
           context: .
-          tags: ${{ env.GITHUB_REPOSITORY }}:2.7.11
+          tags: fabianoflorentino/ansible:2.7.11
           outputs: type=docker,dest=/tmp/ansible27.tar
       -
         name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.GITHUB_REPOSITORY }}:2.7.11
+          name: fabianoflorentino/ansible:2.7.11
           path: /tmp/ansible27.tar
   test:
     runs-on: ubuntu-latest
@@ -56,7 +56,7 @@ jobs:
         name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ env.GITHUB_REPOSITORY }}:2.7.11
+          name: fabianoflorentino/ansible:2.7.11
           path: /tmp
       -
         name: Load image
@@ -66,11 +66,11 @@ jobs:
       - 
         name: Test
         run: |
-          docker run -i --rm --entrypoint "" ${{ env.GITHUB_REPOSITORY }}:2.7.11 /bin/sh -c "ansible --version"
-          docker run -i --rm --entrypoint "" ${{ env.GITHUB_REPOSITORY }}:2.7.11 /bin/sh -c "ansible-vault --version"
-          docker run -i --rm --entrypoint "" ${{ env.GITHUB_REPOSITORY }}:2.7.11 /bin/sh -c "ansible-galaxy --version"
-          docker run -i --rm --entrypoint "" ${{ env.GITHUB_REPOSITORY }}:2.7.11 /bin/sh -c "ansible-playbook --version"
-          docker run -i --rm --entrypoint "" ${{ env.GITHUB_REPOSITORY }}:2.7.11 /bin/sh -c "ansible localhost -m ping"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-vault --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-galaxy --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-playbook --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
   push:
     runs-on: ubuntu-latest
     needs: [login, test]
@@ -78,4 +78,4 @@ jobs:
     steps:
       # Push the image to Docker Hub (Ansible 2.7.11)
       - name: Push Version
-        run: docker push ${{ env.GITHUB_REPOSITORY }}:2.7.11
+        run: docker push $GITHUB_REPOSITORY:2.7.11
