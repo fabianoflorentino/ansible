@@ -56,11 +56,12 @@ jobs:
         name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: $GITHUB_REPOSITORY_2.7.11
+          name: $GITHUB_REPOSITORY_2.7.11.tar
           path: /tmp
       -
         name: Load image
         run: |
+          ls -l /tmp
           docker load --input /tmp/$GITHUB_REPOSITORY_2.7.11.tar
           docker image ls -a
       - 
