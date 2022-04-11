@@ -12,14 +12,6 @@ on:
       - '.github/**'
 
 jobs:
-  login:
-    runs-on: ubuntu-latest
-    environment: DOCKERHUB
-    name: Docker Login
-    steps:
-      - name: Login
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-
   build:
     runs-on: ubuntu-latest
     name: Build Image
@@ -36,7 +28,7 @@ jobs:
         with:
           file: ansible27.Dockerfile
           context: .
-          tags: \$GITHUB_REPOSITORY:2.7.11
+          tags: fabianoflorentino/ansible:2.7.11
           outputs: type=docker,dest=/tmp/ansible27.tar
       -
         name: Upload artifact
@@ -66,16 +58,20 @@ jobs:
       - 
         name: Test
         run: |
-          docker run -i --rm --entrypoint "" \$GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible --version"
-          docker run -i --rm --entrypoint "" \$GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-vault --version"
-          docker run -i --rm --entrypoint "" \$GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-galaxy --version"
-          docker run -i --rm --entrypoint "" \$GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-playbook --version"
-          docker run -i --rm --entrypoint "" \$GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-vault --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-galaxy --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-playbook --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
   push:
     runs-on: ubuntu-latest
-    needs: [login, test]
-    name: Push Image
+    needs: test
+    environment: DOCKERHUB
+    name: Login & Push Image
     steps:
-      # Push the image to Docker Hub (Ansible 2.7.11)
-      - name: Push Version
+      - 
+        name: Login
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+      - 
+        name: Push Version
         run: docker push $GITHUB_REPOSITORY:2.7.11
