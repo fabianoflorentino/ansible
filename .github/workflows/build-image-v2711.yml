@@ -40,14 +40,14 @@ jobs:
     steps:
       - name: Test
         run: |
-          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible --version"
-          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-vault --version"
-          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-galaxy --version"
-          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-playbook --version"
-          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
+          docker run -it --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible --version"
+          docker run -it --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-vault --version"
+          docker run -it --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-galaxy --version"
+          docker run -it --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-playbook --version"
+          docker run -it --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
   push:
     runs-on: ubuntu-latest
-    needs: [login, build]
+    needs: [login, build, test]
     name: Push Image
     steps:
       # Push the image to Docker Hub (Ansible 2.7.11)
