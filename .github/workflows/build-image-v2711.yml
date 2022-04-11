@@ -82,4 +82,4 @@ jobs:
           file: ansible27.Dockerfile
           context: .
           push: true
-          tags: $GITHUB_REPOSITORY:2.7.11
+          tags: fabianoflorentino/ansible:2.7.11
