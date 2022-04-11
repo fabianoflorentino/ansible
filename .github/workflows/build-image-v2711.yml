@@ -25,20 +25,46 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Image
     steps:
-      # Checkout the repository
-      - name: Checkout
+      - 
+        name: Checkout
         uses: actions/checkout@v2
-
-      # Build the image (Ansible 2.7.11)
-      - name: Build Image (Ansible 2.7.11)
-        run: |
-          docker build --no-cache --rm -t $GITHUB_REPOSITORY:2.7.11 -f ./ansible29.Dockerfile .
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Build and export
+        uses: docker/build-push-action@v2
+        with:
+          file: ansible27.Dockerfile
+          context: .
+          tags: $GITHUB_REPOSITORY:2.7.11
+          outputs: type=docker,dest=/tmp/$GITHUB_REPOSITORY_2.7.11.tar
+      -
+        name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: $GITHUB_REPOSITORY:2.7.11
+          path: /tmp/$GITHUB_REPOSITORY_2.7.11.tar
   test:
     runs-on: ubuntu-latest
-    needs: build
     name: Test Image
     steps:
-      - name: Test
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: $GITHUB_REPOSITORY:2.7.11
+          path: /tmp
+      -
+        name: Load image
+        run: |
+          docker load --input /tmp/$GITHUB_REPOSITORY_2.7.11.tar
+          docker image ls -a
+      - 
+        name: Test
         run: |
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible --version"
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-vault --version"
@@ -47,7 +73,7 @@ jobs:
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
   push:
     runs-on: ubuntu-latest
-    needs: [login, build, test]
+    needs: [login, test]
     name: Push Image
     steps:
       # Push the image to Docker Hub (Ansible 2.7.11)
