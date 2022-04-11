@@ -12,14 +12,6 @@ on:
       - '.github/**'
 
 jobs:
-  checkout:
-    runs-on: ubuntu-latest
-    name: Checkout
-    steps:
-      # Checkout the repository
-      - name: Checkout
-        uses: actions/checkout@v2
-
   login:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
@@ -34,11 +26,14 @@ jobs:
     name: Build Image
     needs: checkout
     steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
       # Build the image (Ansible 2.7.11)
       - name: Build Image (Ansible 2.7.11)
         run: |
           docker build --no-cache --rm -t $GITHUB_REPOSITORY:2.7.11 -f ./ansible29.Dockerfile .
-
   test:
     runs-on: ubuntu-latest
     needs: build
