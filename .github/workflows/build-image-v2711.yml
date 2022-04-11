@@ -70,8 +70,16 @@ jobs:
     name: Login & Push Image
     steps:
       - 
-        name: Login
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - 
-        name: Push Version
-        run: docker push $GITHUB_REPOSITORY:2.7.11
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          file: ansible27.Dockerfile
+          context: .
+          push: true
+          tags: $GITHUB_REPOSITORY:2.7.11
