@@ -36,14 +36,14 @@ jobs:
         with:
           file: ansible27.Dockerfile
           context: .
-          tags: 2.7.11
-          outputs: type=docker,dest=/tmp/$GITHUB_REPOSITORY_2.7.11.tar
+          tags: $GITHUB_REPOSITORY:2.7.11
+          outputs: type=docker,dest=/tmp/ansible27.tar
       -
         name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: $GITHUB_REPOSITORY_2.7.11
-          path: /tmp/$GITHUB_REPOSITORY_2.7.11.tar
+          name: $GITHUB_REPOSITORY:2.7.11
+          path: /tmp/ansible27.tar
   test:
     runs-on: ubuntu-latest
     name: Test Image
@@ -56,13 +56,12 @@ jobs:
         name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: $GITHUB_REPOSITORY_2.7.11
+          name: $GITHUB_REPOSITORY:2.7.11
           path: /tmp
       -
         name: Load image
         run: |
-          echo $GITHUB_REPOSITORY
-          docker load --input /tmp/$GITHUB_REPOSITORY_2.7.11.tar
+          docker load --input /tmp/ansible27.tar
           docker image ls -a
       - 
         name: Test
