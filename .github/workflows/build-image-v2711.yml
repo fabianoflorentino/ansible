@@ -47,7 +47,7 @@ jobs:
           docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
   push:
     runs-on: ubuntu-latest
-    needs: login
+    needs: [login, build]
     name: Push Image
     steps:
       # Push the image to Docker Hub (Ansible 2.7.11)
