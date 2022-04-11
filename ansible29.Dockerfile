@@ -22,7 +22,7 @@ RUN adduser --disabled-password --gecos "" ansible \
     && apk --no-cache upgrade \
     && rm -vrf /var/cache/apk/*
 
-COPY --from=build /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.10/site-packages
+COPY --from=build /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=build /usr/local/bin/ansible-vault /usr/local/bin/ansible-vault
 COPY --from=build /usr/local/bin/ansible-galaxy /usr/local/bin/ansible-galaxy
 COPY --from=build /usr/local/bin/ansible-playbook /usr/local/bin/ansible-playbook
