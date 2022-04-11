@@ -24,7 +24,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build Image
-    needs: checkout
     steps:
       # Checkout the repository
       - name: Checkout
