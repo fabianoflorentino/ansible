@@ -13,6 +13,8 @@ on:
 
 jobs:
   checkout:
+    runs-on: ubuntu-latest
+    name: Checkout
     steps:
       # Checkout the repository
       - name: Checkout
@@ -30,6 +32,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build Image
+    needs: checkout
     steps:
       # Build the image (Ansible 2.7.11)
       - name: Build Image (Ansible 2.7.11)
