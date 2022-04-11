@@ -17,7 +17,6 @@ jobs:
     environment: DOCKERHUB
     name: Docker Login
     steps:
-      # Login to Docker Hub
       - name: Login
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -43,11 +42,12 @@ jobs:
         name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: $GITHUB_REPOSITORY:2.7.11
+          name: $GITHUB_REPOSITORY_2.7.11
           path: /tmp/$GITHUB_REPOSITORY_2.7.11.tar
   test:
     runs-on: ubuntu-latest
     name: Test Image
+    needs: build
     steps:
       -
         name: Set up Docker Buildx
