@@ -1,0 +1,50 @@
+---
+name: BUILD IMAGE ANSIBLE 2.7.11
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - 'docs/**'
+      - '.github/**'
+
+jobs:
+  environment: DOCKERHUB
+  name: Build and Push to Docker Hub
+  runs-on: ubuntu-latest
+  chekout:
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+  login:
+    steps:
+      # Login to Docker Hub
+      - name: Login
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build:
+    steps:
+      # Build the image (Ansible 2.7.11)
+      - name: Build Image (Ansible 2.7.11)
+        run: |
+          docker build --no-cache --rm -t $GITHUB_REPOSITORY:2.7.11 -f ./ansible29.Dockerfile .
+
+  test:
+    steps:
+      - name: Test
+        run: |
+          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible --version"
+          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-vault --version"
+          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-galaxy --version"
+          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-playbook --version"
+          docker run -it --rm -t $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
+  push:
+    steps:
+      # Push the image to Docker Hub (Ansible 2.7.11)
+      - name: Push Version
+        run: docker push $GITHUB_REPOSITORY:2.7.11
