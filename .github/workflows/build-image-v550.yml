@@ -60,7 +60,6 @@ jobs:
         run: |
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:5.5.0 /bin/sh -c "ansible --version"
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:5.5.0 /bin/sh -c "ansible-vault --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:5.5.0 /bin/sh -c "ansible-galaxy --version"
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:5.5.0 /bin/sh -c "ansible-playbook --version"
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:5.5.0 /bin/sh -c "ansible localhost -m ping"
   push:
