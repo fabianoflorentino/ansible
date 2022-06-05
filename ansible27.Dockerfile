@@ -19,6 +19,7 @@ FROM python:3.9.12-alpine3.15 as run
 RUN adduser --disabled-password --gecos "" ansible \
     && apk --no-cache update \
     && apk --no-cache upgrade \
+    && apk add openssl openssl-dev sshpass openssh \
     && rm -vrf /var/cache/apk/*
 
 COPY --from=build /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
