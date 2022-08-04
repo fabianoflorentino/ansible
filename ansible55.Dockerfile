@@ -1,4 +1,4 @@
-FROM python:3.11.0a6-alpine3.15 as build
+FROM python:3.11.0b5-alpine3.15 as build
 
 LABEL maintainer="Fabiano Florentino"
 LABEL email="fabianoflorentino@outlook.com"
@@ -14,7 +14,7 @@ RUN apk add --no-cache make gcc g++ libffi-dev openssl openssl-dev sshpass opens
     && pip install -r requirements_ansible5_5_0.txt --no-cache-dir \
     && rm -vrf /var/cache/apk/*
 
-FROM python:3.11.0a6-alpine3.15 as run
+FROM python:3.11.0b5-alpine3.15 as run
 
 RUN adduser --disabled-password --gecos "" ansible \
     && apk --no-cache update \
