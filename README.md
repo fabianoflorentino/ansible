@@ -13,7 +13,7 @@
 ### **Local Usage**
 
 ```bash
-# Ansible 4.10.0
+# Ansible 4.10.0  
 
 # Build
 docker build --no-cache -t <IMAGE NAME>:<TAG> -f ./ansible4100.Dockerfile .
