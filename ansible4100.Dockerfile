@@ -5,13 +5,13 @@ LABEL email="fabianoflorentino@outlook.com"
 LABEL ansible version="2.7.11"
 LABEL image version="v0.1"
 
-COPY requirements_ansible2_7_11.txt .
+COPY requirements_ansible4_10_0.txt .
 
 RUN apk add --no-cache make gcc g++ libffi-dev openssl openssl-dev sshpass openssh \
     && apk --no-cache update \
     && apk --no-cache upgrade \
     && pip install --upgrade pip \
-    && pip install -r requirements_ansible2_7_11.txt --no-cache-dir \
+    && pip install -r requirements_ansible4_10_0.txt --no-cache-dir \
     && rm -vrf /var/cache/apk/*
 
 FROM python:3.9.14-alpine3.16 as run

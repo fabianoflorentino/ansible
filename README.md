@@ -1,4 +1,4 @@
-[![BUILD IMAGE ANSIBLE 2.7.11](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v2711.yml/badge.svg)](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v2711.yml) 
+[![BUILD IMAGE ANSIBLE 4.10.0](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v4100.yml/badge.svg)](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v4100.yml) 
 [![BUILD IMAGE ANSIBLE 2.9.21](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v2921.yml/badge.svg)](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v2921.yml) 
 [![BUILD IMAGE ANSIBLE 5.5.0](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v550.yml/badge.svg)](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v550.yml)
 
@@ -13,13 +13,13 @@
 ### **Local Usage**
 
 ```bash
-# Ansible 2.7.11
+# Ansible 4.10.0
 
 # Build
-docker build --no-cache -t <IMAGE NAME>:<TAG> -f ./ansible27.Dockerfile .
+docker build --no-cache -t <IMAGE NAME>:<TAG> -f ./ansible4100.Dockerfile .
 
 # Run
-docker run -it --name ansible -v $PWD:/ansible -w /ansible --entrypoint "" fabianoflorentino/ansible:2.7.11 sh
+docker run -it --name ansible -v $PWD:/ansible -w /ansible --entrypoint "" fabianoflorentino/ansible:4.10.0 sh
 ```
 
 ```bash
@@ -45,13 +45,13 @@ docker run -it --name ansible -v $PWD:/ansible -w /ansible --entrypoint "" fabia
 ### **Local Usage from Remote**
 
 ```bash
-# Ansible 2.7.11
+# Ansible 4.10.0
 
 # Pull (Download)
-docker pull fabianoflorentino/ansible:2.7.11
+docker pull fabianoflorentino/ansible:4.10.0
 
 # Run
-docker run -it --name ansible -v $PWD:/ansible -w /ansible --entrypoint "" fabianoflorentino/ansible:2.7.11 sh
+docker run -it --name ansible -v $PWD:/ansible -w /ansible --entrypoint "" fabianoflorentino/ansible:4.10.0 sh
 ```
 
 ```bash
@@ -76,11 +76,11 @@ docker run -it --name ansible -v $PWD:/ansible -w /ansible --entrypoint "" fabia
 
 ### **Github Actions**
 
-#### **Ansible 2.7.11**
+#### **Ansible 4.10.0**
 
 ```yaml
 ---
-name: BUILD IMAGE ANSIBLE 2.7.11
+name: BUILD IMAGE ANSIBLE 4.10.0
 
 on:
   push:
@@ -107,9 +107,9 @@ jobs:
         name: Build and export
         uses: docker/build-push-action@v2
         with:
-          file: ansible27.Dockerfile
+          file: ansible4100.Dockerfile
           context: .
-          tags: fabianoflorentino/ansible:2.7.11
+          tags: fabianoflorentino/ansible:4.10.0
           outputs: type=docker,dest=/tmp/ansible27.tar
       -
         name: Upload artifact
@@ -139,11 +139,11 @@ jobs:
       - 
         name: Test
         run: |
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-vault --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-galaxy --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible-playbook --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.7.11 /bin/sh -c "ansible localhost -m ping"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:4.10.0 /bin/sh -c "ansible --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:4.10.0 /bin/sh -c "ansible-vault --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:4.10.0 /bin/sh -c "ansible-galaxy --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:4.10.0 /bin/sh -c "ansible-playbook --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:4.10.0 /bin/sh -c "ansible localhost -m ping"
   push:
     runs-on: ubuntu-latest
     needs: test
@@ -166,10 +166,10 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: ansible27.Dockerfile
+          file: ansible4100.Dockerfile
           context: .
           push: true
-          tags: fabianoflorentino/ansible:2.7.11
+          tags: fabianoflorentino/ansible:4.10.0
 ```
 
 #### **Ansible 2.9.21**
