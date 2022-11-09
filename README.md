@@ -2,7 +2,7 @@
 [![BUILD IMAGE ANSIBLE 2.9.21](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v2921.yml/badge.svg)](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v2921.yml) 
 [![BUILD IMAGE ANSIBLE 5.5.0](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v550.yml/badge.svg)](https://github.com/fabianoflorentino/ansible/actions/workflows/build-image-v550.yml)
 
-# A container image for run ansible tool
+# Container image for run ansible tool
 
 ## **Usage**
 
