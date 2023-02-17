@@ -2,8 +2,9 @@ FROM python:3.9.14-alpine3.16 as build
 
 LABEL maintainer="Fabiano Florentino"
 LABEL email="fabianoflorentino@outlook.com"
-LABEL ansible version="2.7.11"
-LABEL image version="v0.1"
+LABEL ansible version="4.10.0"
+LABEL ansible-core="2.11.7"
+LABEL image version="v0.2"
 
 COPY requirements_ansible4_10_0.txt .
 
@@ -19,7 +20,7 @@ FROM python:3.9.14-alpine3.16 as run
 RUN adduser --disabled-password --gecos "" ansible \
     && apk --no-cache update \
     && apk --no-cache upgrade \
-    && apk add openssl openssl-dev sshpass openssh \
+    && apk add --no-cache openssl openssl-dev sshpass openssh git \
     && rm -vrf /var/cache/apk/*
 
 COPY --from=build /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
