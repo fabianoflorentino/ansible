@@ -4,7 +4,7 @@ LABEL maintainer="Fabiano Florentino"
 LABEL email="fabianoflorentino@outlook.com"
 LABEL ansible version="4.10.0"
 LABEL ansible-core="2.11.7"
-LABEL image version="v0.2"
+LABEL image version="v0.3"
 
 COPY requirements_ansible4_10_0.txt .
 
@@ -28,6 +28,7 @@ COPY --from=build /usr/local/bin/ansible-vault /usr/local/bin/ansible-vault
 COPY --from=build /usr/local/bin/ansible-galaxy /usr/local/bin/ansible-galaxy
 COPY --from=build /usr/local/bin/ansible-playbook /usr/local/bin/ansible-playbook
 COPY --from=build /usr/local/bin/ansible /usr/local/bin/ansible
+COPY --from=build /usr/local/bin/ansible-lint /usr/local/bin/ansible-lint
 
 USER ansible
 
