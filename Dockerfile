@@ -30,4 +30,5 @@ COPY --from=build /usr/local/bin/ansible-lint /usr/local/bin/ansible-lint
 
 USER ansible
 
+
 ENTRYPOINT [ "sh" ]
