@@ -1,6 +1,5 @@
 FROM python:alpine3.17 as build
 
-
 LABEL maintainer="Fabiano Florentino"
 LABEL email="fabianoflorentino@outlook.com"
 LABEL ansible version="7.3.0"
