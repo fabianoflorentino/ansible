@@ -14,7 +14,7 @@
 # Ansible 7.3.0
 
 # Build
-docker build --no-cache -t <IMAGE NAME>:<TAG> -f ./ansible55.Dockerfile .
+docker build --no-cache -t <IMAGE NAME>:<TAG> -f ./Dockerfile .
 
 # Run
 docker run -it --name ansible -v $PWD:/ansible -w /ansible --entrypoint "" fabianoflorentino/ansible:7.3.0 sh
@@ -67,16 +67,16 @@ jobs:
         name: Build and export
         uses: docker/build-push-action@v2
         with:
-          file: ansible55.Dockerfile
+          file: Dockerfile
           context: .
           tags: fabianoflorentino/ansible:7.3.0
-          outputs: type=docker,dest=/tmp/ansible55.tar
+          outputs: type=docker,dest=/tmp/ansible.tar
       -
         name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ansible55
-          path: /tmp/ansible55.tar
+          name: ansible
+          path: /tmp/ansible.tar
   test:
     runs-on: ubuntu-latest
     name: Test Image
@@ -89,12 +89,12 @@ jobs:
         name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: ansible55
+          name: ansible
           path: /tmp
       -
         name: Load image
         run: |
-          docker load --input /tmp/ansible55.tar
+          docker load --input /tmp/ansible.tar
           docker image ls -a
       -
         name: Test
@@ -125,7 +125,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: ansible55.Dockerfile
+          file: Dockerfile
           context: .
           push: true
           tags: fabianoflorentino/ansible:7.3.0
