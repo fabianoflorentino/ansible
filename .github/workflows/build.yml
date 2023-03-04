@@ -1,22 +1,21 @@
 ---
-name: BUILD IMAGE ANSIBLE 2.9.21
+name: BUILD IMAGE ANSIBLE 7.3.0
 
 on:
   push:
     branches:
-      - main
+      - '7.3.0'
     paths-ignore:
       - 'README.md'
       - 'LICENSE'
       - 'docs/**'
       - '.github/**'
-
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build Image
     steps:
-      - 
+      -
         name: Checkout
         uses: actions/checkout@v2
       -
@@ -26,16 +25,16 @@ jobs:
         name: Build and export
         uses: docker/build-push-action@v2
         with:
-          file: ansible29.Dockerfile
+          file: Dockerfile
           context: .
-          tags: fabianoflorentino/ansible:2.9.21
-          outputs: type=docker,dest=/tmp/ansible29.tar
+          tags: fabianoflorentino/ansible:7.3.0
+          outputs: type=docker,dest=/tmp/ansible.tar
       -
         name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ansible29
-          path: /tmp/ansible29.tar
+          name: ansible
+          path: /tmp/ansible.tar
   test:
     runs-on: ubuntu-latest
     name: Test Image
@@ -43,49 +42,48 @@ jobs:
     steps:
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
       -
         name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          name: ansible29
+          name: ansible
           path: /tmp
       -
         name: Load image
         run: |
-          docker load --input /tmp/ansible29.tar
+          docker load --input /tmp/ansible.tar
           docker image ls -a
-      - 
+      -
         name: Test
         run: |
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.9.21 /bin/sh -c "ansible --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.9.21 /bin/sh -c "ansible-vault --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.9.21 /bin/sh -c "ansible-galaxy --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.9.21 /bin/sh -c "ansible-playbook --version"
-          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:2.9.21 /bin/sh -c "ansible localhost -m ping"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible-vault --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible-playbook --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible localhost -m ping"
   push:
     runs-on: ubuntu-latest
     needs: test
     environment: DOCKERHUB
     name: Push Image
     steps:
-      - 
+      -
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - 
+        uses: docker/setup-buildx-action@v2
+      -
         name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - 
+      -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: ansible29.Dockerfile
+          file: Dockerfile
           context: .
           push: true
-          tags: fabianoflorentino/ansible:2.9.21
+          tags: fabianoflorentino/ansible:7.3.0
