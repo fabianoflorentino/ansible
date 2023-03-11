@@ -3,7 +3,7 @@ FROM python:alpine3.17 as build
 LABEL maintainer="Fabiano Florentino"
 LABEL email="fabianoflorentino@outlook.com"
 LABEL ansible version="7.3.0"
-LABEL image version="v0.0.1"
+LABEL image version="v0.0.3"
 
 COPY requirements.txt .
 
