@@ -28,6 +28,8 @@ COPY --from=build /usr/local/bin/ansible-playbook /usr/local/bin/ansible-playboo
 COPY --from=build /usr/local/bin/ansible-galaxy /usr/local/bin/ansible-galaxy
 COPY --from=build /usr/local/bin/ansible-vault /usr/local/bin/ansible-vault
 COPY --from=build /usr/local/bin/ansible-lint /usr/local/bin/ansible-lint
+COPY --from=build /usr/local/bin/ansible-config /usr/local/bin/ansible-config
+COPY --from=build /usr/local/bin/ansible-test /usr/local/bin/ansible-test
 
 USER ansible
 
