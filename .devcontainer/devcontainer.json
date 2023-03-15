@@ -1,0 +1,67 @@
+{
+  "name": "Ansible",
+  "containerUser": "ansible",
+  "shutdownAction": "stopContainer",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/personal,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces/personal",
+  "build": {
+    "context": "../",
+    "dockerfile": "../Dockerfile"
+  },
+  "containerEnv": {
+    "ANSIBLE_HASHI_VAULT_ADDR": "",
+    "ANSIBLE_HASHI_VAULT_AUTH_METHOD": "",
+    "ANSIBLE_HASHI_VAULT_ROLE_ID": "",
+    "ANSIBLE_HASHI_VAULT_SECRET_ID": ""
+  },
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}/.ssh",
+      "target": "/home/ansible/.ssh",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}/.gitconfig.d",
+      "target": "/home/ansible/.gitconfig.d",
+      "type": "bind"
+    }
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // "bierner.github-markdown-preview",
+        // "bierner.markdown-checkbox",
+        // "bierner.markdown-preview-github-styles",
+        // "bierner.markdown-yaml-preamble",
+        // "DavidAnson.vscode-markdownlint",
+        // "donjayamanne.githistory",
+        // "eamodio.gitlens",
+        // "foxundermoon.shell-format",
+        // "GitHub.copilot",
+        // "GitHub.github-vscode-theme",
+        // "GrapeCity.gc-excelviewer",
+        // "KoichiSasada.vscode-rdbg",
+        // "mads-hartmann.bash-ide-vscode",
+        // "mechatroner.rainbow-csv",
+        // "mhutchie.git-graph",
+        // "misogi.ruby-rubocop",
+        // "ms-azuretools.vscode-docker",
+        // "ms-python.isort",
+        // "ms-python.pylint",
+        // "ms-python.python",
+        // "ms-python.vscode-pylance",
+        // "ms-vscode-remote.remote-containers",
+        // "oderwat.indent-rainbow",
+        // "PKief.material-icon-theme",
+        // "qwtel.sqlite-viewer",
+        // "redhat.ansible",
+        // "redhat.vscode-xml",
+        // "redhat.vscode-yaml",
+        // "Shopify.ruby-extensions-pack",
+        // "Shopify.ruby-lsp",
+        // "sorbet.sorbet-vscode-extension",
+        // "timonwong.shellcheck"
+      ]
+    }
+  }
+}

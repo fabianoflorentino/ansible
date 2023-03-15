@@ -62,6 +62,8 @@ jobs:
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible-vault --version"
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible-galaxy --version"
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible-lint --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible-config --version"
+          docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible-test --version"
           docker run -i --rm --entrypoint "" $GITHUB_REPOSITORY:7.3.0 /bin/sh -c "ansible localhost -m ping"
   push:
     runs-on: ubuntu-latest
