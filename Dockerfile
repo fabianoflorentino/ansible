@@ -3,7 +3,7 @@ FROM python:alpine3.17 as build
 LABEL maintainer="Fabiano Florentino"
 LABEL email="fabianoflorentino@outlook.com"
 LABEL ansible version="7.3.0"
-LABEL image version="v0.0.3"
+LABEL image version="v0.0.4"
 
 COPY requirements.txt .
 
@@ -19,7 +19,7 @@ FROM python:alpine3.17 as run
 RUN adduser --disabled-password --gecos "" ansible \
   && apk --no-cache update \
   && apk --no-cache upgrade \
-  && apk add --no-cache make openssh sshpass git \
+  && apk add --no-cache make openssh sshpass gnupg git \
   && rm -vrf /var/cache/apk/*
 
 COPY --from=build /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
